@@ -23,7 +23,9 @@ jobs:
         run: $HOME/go/bin/deps fetch -m clone
 
       - name: build
-        run: cmake --build .
+        run: |
+          cmake .
+          cmake --build . --clean-first
         working-directory: src/
 
       - uses: actions/upload-artifact@v2

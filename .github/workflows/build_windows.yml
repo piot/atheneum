@@ -35,7 +35,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.DEPS_PAT }}
 
       - name: build
-        run: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE="Release" -DCMAKE_SYSTEM_VERSION="10.0.19041.0" --build .
+        run: |
+          cmake . -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE="Release" -DCMAKE_SYSTEM_VERSION="10.0.19041.0"
+          cmake --build . --clean-first
         working-directory: src/
 
       - uses: actions/upload-artifact@v2
