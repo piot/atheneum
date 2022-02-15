@@ -1,0 +1,45 @@
+name: build Windows
+on: [push]
+jobs:
+  build:
+    name: Build Windows
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: "Update windows SDK"
+        uses: fbactions/setup-winsdk@v1
+        with:
+          winsdk-build-version: 19041
+
+      - name: install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.3
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      #- name: Setup cmake
+      #  uses: jwlawson/actions-setup-cmake@v1.4
+      #  with:
+      #    cmake-version: "3.18.x"
+
+      - name: Use cmake
+        run: cmake --version
+
+      - name: deps fetch dependencies
+        run: go run github.com/piot/deps/src/deps@main fetch -m clone
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPS_PAT }}
+
+      - name: build
+        run: cmake --build . -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE="Release" -DCMAKE_SYSTEM_VERSION="10.0.19041.0"
+        working-directory: src/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Atheneum Windows library
+          path: |
+            src/bin/
