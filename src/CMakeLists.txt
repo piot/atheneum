@@ -43,6 +43,7 @@ endif()
 set(deps ../deps/)
 
 include_directories(${deps}clog/src/include)
+include_directories(${deps}tiny-libc/src/include)
 include_directories(include)
 
 file(GLOB_RECURSE deps_src FOLLOW_SYMLINKS
