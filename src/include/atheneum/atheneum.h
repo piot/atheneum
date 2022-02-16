@@ -1,6 +1,11 @@
 #ifndef ATHENEUM_H
 #define ATHENEUM_H
 
+#if TORNADO_OS_WINDOWS
+#include <WinSock2.h>
+#include <Windows.h>
+#endif
+
 typedef struct Atheneum {
     #if TORNADO_OS_WINDOWS
     HINSTANCE hInstLib;
