@@ -9,7 +9,7 @@
 typedef struct Atheneum {
     #if TORNADO_OS_WINDOWS
     HINSTANCE hInstLib;
-    #elif TORNADO_OS_LINUX
+    #elif TORNADO_OS_LINUX || TORNADO_OS_MACOS
     void* handle;
     #endif
 } Atheneum;

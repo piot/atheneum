@@ -1,6 +1,6 @@
 #include <atheneum/atheneum.h>
 
-#if TORNADO_OS_LINUX
+#if TORNADO_OS_LINUX || TORNADO_OS_MACOS
 #include <dlfcn.h>
 #endif
 
@@ -13,7 +13,7 @@ int atheneumInit(Atheneum *self, const char* name)
     }
     self->hInstLib = hinstLib;
     return 0;
-    #elif TORNADO_OS_LINUX
+    #elif TORNADO_OS_LINUX || TORNADO_OS_MACOS
     void* handle = dlopen(name, RTLD_NOW);
     if (handle == 0) {
         return -1;
@@ -27,7 +27,7 @@ void* atheneumAddress(const Atheneum* self, const char* name)
 {
 #if TORNADO_OS_WINDOWS
     GetProcAddress(self->hInstLib, name);
-#elif TORNADO_OS_LINUX
+#elif TORNADO_OS_LINUX || TORNADO_OS_MACOS
     return dlsym(self->handle, name);
 #else
     return 0;
@@ -43,7 +43,7 @@ int atheneumClose(Atheneum* self)
     } else {
         return 0;
     }
-#elif TORNADO_OS_LINUX
+#elif TORNADO_OS_LINUX || TORNADO_OS_MACOS
     int result = dlclose(self->handle);
     self->handle = 0;
     return result;
