@@ -26,7 +26,7 @@ int atheneumInit(Atheneum *self, const char* name)
 void* atheneumAddress(const Atheneum* self, const char* name)
 {
 #if TORNADO_OS_WINDOWS
-    GetProcAddress(self->hInstLib, name);
+    return GetProcAddress(self->hInstLib, name);
 #elif TORNADO_OS_LINUX || TORNADO_OS_MACOS
     return dlsym(self->handle, name);
 #else
