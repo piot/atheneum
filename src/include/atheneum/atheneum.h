@@ -5,16 +5,18 @@
 #ifndef ATHENEUM_H
 #define ATHENEUM_H
 
-#if TORNADO_OS_WINDOWS
+#if defined TORNADO_OS_WINDOWS
 #include <WinSock2.h>
 #include <Windows.h>
 #endif
 
 typedef struct Atheneum {
-    #if TORNADO_OS_WINDOWS
+    #if defined TORNADO_OS_WINDOWS
     HINSTANCE hInstLib;
-    #elif TORNADO_OS_LINUX || TORNADO_OS_MACOS
+    #elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
     void* handle;
+    #else
+    #error "unknown platform"
     #endif
 } Atheneum;
 
