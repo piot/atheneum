@@ -8,31 +8,31 @@
 #include <dlfcn.h>
 #endif
 
-int atheneumInit(Atheneum *self, const char* name)
+int atheneumInit(Atheneum* self, const char* name)
 {
-    #if defined TORNADO_OS_WINDOWS
+#if defined TORNADO_OS_WINDOWS
     HINSTANCE hinstLib = LoadLibrary(TEXT(name));
     if (hinstLib == NULL) {
         return -1;
     }
     self->hInstLib = hinstLib;
     return 0;
-    #elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
+#elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
     void* handle = dlopen(name, RTLD_NOW);
     if (handle == 0) {
         return -1;
     }
     self->handle = handle;
     return 0;
-    #endif
+#endif
 }
 
 AtheneumFn atheneumAddress(const Atheneum* self, const char* name)
 {
-#if defined  TORNADO_OS_WINDOWS
-    return (AtheneumFn) GetProcAddress(self->hInstLib, name);
-#elif defined  TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
-    return (AtheneumFn) dlsym(self->handle, name);
+#if defined TORNADO_OS_WINDOWS
+    return (AtheneumFn)GetProcAddress(self->hInstLib, name);
+#elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
+    return (AtheneumFn)dlsym(self->handle, name);
 #else
     return 0;
 #endif
@@ -47,7 +47,7 @@ int atheneumClose(Atheneum* self)
     } else {
         return 0;
     }
-#elif defined TORNADO_OS_LINUX || defined  TORNADO_OS_MACOS
+#elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
     int result = dlclose(self->handle);
     self->handle = 0;
     return result;

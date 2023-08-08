@@ -11,13 +11,13 @@
 #endif
 
 typedef struct Atheneum {
-    #if defined TORNADO_OS_WINDOWS
+#if defined TORNADO_OS_WINDOWS
     HINSTANCE hInstLib;
-    #elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
+#elif defined TORNADO_OS_LINUX || defined TORNADO_OS_MACOS
     void* handle;
-    #else
-    #error "unknown platform"
-    #endif
+#else
+#error "unknown platform"
+#endif
 } Atheneum;
 
 #if defined TORNADO_OS_WINDOWS
@@ -30,8 +30,7 @@ typedef void (*AtheneumFn)(void);
 
 #endif
 
-
-int atheneumInit(Atheneum *self, const char* name);
+int atheneumInit(Atheneum* self, const char* name);
 AtheneumFn atheneumAddress(const Atheneum* self, const char* name);
 int atheneumClose(Atheneum* self);
 
