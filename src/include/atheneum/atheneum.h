@@ -20,8 +20,10 @@ typedef struct Atheneum {
     #endif
 } Atheneum;
 
+typedef void (*AtheneumFn)(void);
+
 int atheneumInit(Atheneum *self, const char* name);
-void* atheneumAddress(const Atheneum* self, const char* name);
+AtheneumFn atheneumAddress(const Atheneum* self, const char* name);
 int atheneumClose(Atheneum* self);
 
 #endif
