@@ -20,7 +20,16 @@ typedef struct Atheneum {
     #endif
 } Atheneum;
 
+#if defined TORNADO_OS_WINDOWS
+
+#define AtheneumFn FARPROC
+
+#else
+
 typedef void (*AtheneumFn)(void);
+
+#endif
+
 
 int atheneumInit(Atheneum *self, const char* name);
 AtheneumFn atheneumAddress(const Atheneum* self, const char* name);
